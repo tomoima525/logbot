@@ -1,1 +1,1 @@
-include ':sample', ':logbot'
+include ':sample', ':logbot', ':logbot-no-op'

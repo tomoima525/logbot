@@ -9,7 +9,7 @@ object Logbot {
 
     private var localBroadcastManager: LocalBroadcastManager? = null
 
-    var packageName: String? = null
+    internal var packageName: String? = null
         get() {
             if (field == null) {
                 AssertionError("Logbot.setup() should be called to use Logbot")
@@ -18,7 +18,7 @@ object Logbot {
         }
         private set
 
-    var logbotSettings: LogbotSettings? = null
+    internal var logbotSettings: LogbotSettings? = null
         get() {
             if (field == null) {
                 AssertionError("Logbot.setup() should be called to use Logbot")
