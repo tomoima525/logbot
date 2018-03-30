@@ -2,7 +2,7 @@
 
 View logs on top of your application
 
-![art](./art/img1.png)
+![art](./art/logbot_demo.gif)
 
 ## What's this for?
 
