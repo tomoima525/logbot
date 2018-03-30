@@ -1,0 +1,9 @@
+<manifest package="com.tomoima.logbot"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <application>
+        <activity android:name="com.tomoima.logbot.core.LogbotLauncher">
+        </activity>
+        <service android:name="com.tomoima.logbot.view.OverlayViewService" />
+    </application>
+</manifest>
