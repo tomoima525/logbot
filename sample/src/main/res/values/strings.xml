@@ -1,6 +1,3 @@
 <resources>
-    <string name="app_name">Logbot</string>
-    <string name="close">close</string>
-    <string name="clear">clear</string>
-    <string name="share">share</string>
+    <string name="app_name">Logbot Sample</string>
 </resources>

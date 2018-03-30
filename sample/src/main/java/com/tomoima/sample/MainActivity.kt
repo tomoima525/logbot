@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val sendEvent = findViewById<Button>(R.id.send_event)
         sendEvent.setOnClickListener { _ ->
-            Logbot.send("[$count] message %s", UUID.randomUUID())
+            Logbot.send("[$count] message:\n %s", UUID.randomUUID())
             count++
         }
     }
