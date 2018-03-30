@@ -8,52 +8,71 @@
     android:layout_marginEnd="@dimen/margin_16dp"
     android:layout_marginStart="@dimen/margin_16dp"
     android:layout_marginTop="@dimen/margin_24dp"
-    android:background="@drawable/bg_round_rectangle"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/log_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:layout_marginBottom="@dimen/margin_24dp"
-        android:orientation="vertical"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    />
+    android:background="@drawable/bg_round_rectangle">
 
     <ImageView
         android:id="@+id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/margin_8dp"
+        android:padding="@dimen/margin_8dp"
         android:contentDescription="@string/close"
         android:src="@drawable/ic_close_white_24dp"
     />
 
-    <TextView
+    <ImageView
         android:id="@+id/clear_log"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_toLeftOf="@+id/close"
         android:padding="@dimen/margin_8dp"
-        android:layout_marginEnd="@dimen/margin_8dp"
-        android:text="@string/clear"
-        android:textColor="@color/text_white"
+        android:contentDescription="@string/clear"
+        android:src="@drawable/ic_delete_sweep_white_24dp"
     />
 
-    <TextView
+    <ImageView
         android:id="@+id/share_log"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/clear_log"
         android:padding="@dimen/margin_8dp"
-        android:layout_marginEnd="@dimen/margin_4dp"
-        android:text="@string/share"
-        android:textColor="@color/text_white"
+        android:contentDescription="@string/share"
+        android:src="@drawable/ic_share_white_24dp"
+    />
+
+    <ImageView
+        android:id="@+id/shrink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/share_log"
+        android:padding="@dimen/margin_8dp"
+        android:contentDescription="@string/shrink"
+        android:src="@drawable/ic_remove_white_24dp"
+    />
+
+    <ImageView
+        android:id="@+id/expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/share_log"
+        android:padding="@dimen/margin_8dp"
+        android:contentDescription="@string/expand"
+        android:src="@drawable/ic_add_white_24dp"
+        android:visibility="gone"
+    />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/log_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/close"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
     />
 </RelativeLayout>

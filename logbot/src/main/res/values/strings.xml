@@ -3,4 +3,6 @@
     <string name="close">close</string>
     <string name="clear">clear</string>
     <string name="share">share</string>
+    <string name="shrink">shrink</string>
+    <string name="expand">expand</string>
 </resources>

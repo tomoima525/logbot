@@ -1,5 +1,6 @@
 package com.tomoima.logbot.view
 
+import android.animation.ValueAnimator
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -12,10 +13,15 @@ import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.animation.doOnEnd
+import androidx.animation.doOnStart
+import com.tomoima.logbot.R
 import com.tomoima.logbot.core.Consts
 import com.tomoima.logbot.core.Logbot
-import com.tomoima.logbot.R
+
+
+
+
 
 
 class OverlayViewService : Service() {
@@ -41,6 +47,8 @@ class OverlayViewService : Service() {
                     ?: Consts.DEFAULT_LOG_BUFFER)
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var shrinkButton: ImageView
+    private lateinit var expandButton: ImageView
 
     override fun onBind(Intent: Intent?): IBinder? {
         return null
@@ -63,8 +71,14 @@ class OverlayViewService : Service() {
         windowManager.addView(overlayView, params)
 
         overlayView.findViewById<ImageView>(R.id.close).setOnClickListener { _ -> stopSelf() }
-        overlayView.findViewById<TextView>(R.id.clear_log).setOnClickListener { _ -> clearLog() }
-        overlayView.findViewById<TextView>(R.id.share_log).setOnClickListener { _ -> shareLog() }
+        overlayView.findViewById<ImageView>(R.id.clear_log).setOnClickListener { _ -> clearLog() }
+        overlayView.findViewById<ImageView>(R.id.share_log).setOnClickListener { _ -> shareLog() }
+
+        shrinkButton = overlayView.findViewById(R.id.shrink)
+        shrinkButton.setOnClickListener { _ -> shrink() }
+
+        expandButton = overlayView.findViewById(R.id.expand)
+        expandButton.setOnClickListener { _ -> expand() }
 
         recyclerView = overlayView.findViewById(R.id.log_list)
         recyclerView.adapter = logAdapter
@@ -132,6 +146,40 @@ class OverlayViewService : Service() {
         actionIntent.putExtra(Intent.EXTRA_TEXT, message)
         actionIntent.putExtra(Intent.EXTRA_SUBJECT, "Log")
         startActivity(actionIntent)
+    }
+
+    private fun shrink() {
+        val newHeight = resources.getDimensionPixelSize(R.dimen.margin_36dp)
+        val slideAnimator = ValueAnimator
+                .ofInt(overlayView.height, newHeight)
+                .setDuration(300)
+        slideAnimator.addUpdateListener { animation ->
+            val value = animation.animatedValue as Int
+            overlayView.layoutParams.height = value
+            windowManager.updateViewLayout(overlayView, overlayView.layoutParams)
+        }
+        slideAnimator.doOnEnd {
+            shrinkButton.visibility = View.GONE
+            expandButton.visibility = View.VISIBLE
+        }
+        slideAnimator.start()
+    }
+
+    private fun expand() {
+        val newHeight = resources.getDimensionPixelSize(R.dimen.overlay_height)
+        val slideAnimator = ValueAnimator
+                .ofInt(overlayView.height, newHeight)
+                .setDuration(300)
+        slideAnimator.addUpdateListener { animation ->
+            val value = animation.animatedValue as Int
+            overlayView.layoutParams.height = value
+            windowManager.updateViewLayout(overlayView, overlayView.layoutParams)
+        }
+        slideAnimator.doOnStart {
+            shrinkButton.visibility = View.VISIBLE
+            expandButton.visibility = View.GONE
+        }
+        slideAnimator.start()
     }
 
     private fun createWindowLayoutParams() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
