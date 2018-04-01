@@ -40,7 +40,7 @@ dependencies {
     testImplementation "junit:junit:$versions.junit"
     androidTestImplementation "com.android.support.test:runner:$versions.testRunner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$versions.espressoCore"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
     mavenCentral()
