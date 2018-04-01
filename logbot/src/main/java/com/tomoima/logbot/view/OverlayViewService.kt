@@ -190,6 +190,7 @@ class OverlayViewService : Service() {
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT)
     } else {
+        @Suppress("DEPRECATION")
         WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
