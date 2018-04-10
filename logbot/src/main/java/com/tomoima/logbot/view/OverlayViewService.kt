@@ -13,16 +13,12 @@ import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
-import androidx.animation.doOnEnd
-import androidx.animation.doOnStart
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
+
 import com.tomoima.logbot.R
 import com.tomoima.logbot.core.Consts
 import com.tomoima.logbot.core.Logbot
-
-
-
-
-
 
 class OverlayViewService : Service() {
 
@@ -43,8 +39,8 @@ class OverlayViewService : Service() {
     }
 
     private val logAdapter =
-            LogAdapter(Logbot.logbotSettings?.bufferSize
-                    ?: Consts.DEFAULT_LOG_BUFFER)
+        LogAdapter(Logbot.logbotSettings?.bufferSize
+            ?: Consts.DEFAULT_LOG_BUFFER)
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var shrinkButton: ImageView
@@ -58,8 +54,8 @@ class OverlayViewService : Service() {
         super.onCreate()
 
         LocalBroadcastManager
-                .getInstance(this)
-                .registerReceiver(messageReceiver, IntentFilter(Consts.EVENT_SEND_LOG))
+            .getInstance(this)
+            .registerReceiver(messageReceiver, IntentFilter(Consts.EVENT_SEND_LOG))
 
         val params = createWindowLayoutParams()
         params.gravity = Gravity.TOP or Gravity.LEFT
@@ -133,7 +129,7 @@ class OverlayViewService : Service() {
 
     fun addLog(log: String) {
         logAdapter.addLog(log)
-        recyclerView.smoothScrollToPosition(logAdapter.itemCount -1)
+        recyclerView.smoothScrollToPosition(logAdapter.itemCount - 1)
     }
 
     private fun clearLog() = logAdapter.clearLog()
@@ -151,8 +147,8 @@ class OverlayViewService : Service() {
     private fun shrink() {
         val newHeight = resources.getDimensionPixelSize(R.dimen.margin_36dp)
         val slideAnimator = ValueAnimator
-                .ofInt(overlayView.height, newHeight)
-                .setDuration(300)
+            .ofInt(overlayView.height, newHeight)
+            .setDuration(300)
         slideAnimator.addUpdateListener { animation ->
             val value = animation.animatedValue as Int
             overlayView.layoutParams.height = value
@@ -168,8 +164,8 @@ class OverlayViewService : Service() {
     private fun expand() {
         val newHeight = resources.getDimensionPixelSize(R.dimen.overlay_height)
         val slideAnimator = ValueAnimator
-                .ofInt(overlayView.height, newHeight)
-                .setDuration(300)
+            .ofInt(overlayView.height, newHeight)
+            .setDuration(300)
         slideAnimator.addUpdateListener { animation ->
             val value = animation.animatedValue as Int
             overlayView.layoutParams.height = value
@@ -184,19 +180,19 @@ class OverlayViewService : Service() {
 
     private fun createWindowLayoutParams() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT)
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            PixelFormat.TRANSLUCENT)
     } else {
         @Suppress("DEPRECATION")
         WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT)
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.TYPE_PHONE,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            PixelFormat.TRANSLUCENT)
     }
 
 
