@@ -1,5 +1,16 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.dokka'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${versions.dokka}"
+    }
+}
 
 android {
     compileSdkVersion 27
@@ -38,9 +49,21 @@ publish {
     licences = ['Apache-2.0']
 }
 
-//TODO:fix javadoc error
-tasks.withType(Javadoc) {
-    enabled = false
+// source jar (optional)
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    classifier = 'javadoc'
+    from "$buildDir/javadoc"
 }
 
 dependencies {
@@ -52,4 +75,65 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+
+// Publish Artifacts with Maven plugin
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'com.tomoima.logbot'
+            artifactId 'logbot-no-op'
+            version "$library_version"
+            artifact("$buildDir/outputs/aar/$artifactId-release.aar")
+            artifact(androidSourcesJar)
+            artifact(javadocJar)
+
+            // Add exclude and transitive options
+            //https://gist.github.com/Robyer/a6578e60127418b380ca133a1291f017
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                // List all compile dependencies and write to POM
+                configurations.implementation.getAllDependencies().each { Dependency dep ->
+                    if (dep.group == null || dep.version == null || dep.name == null || dep.name == "unspecified")
+                        return // ignore invalid dependencies
+
+                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', dep.group)
+                    dependencyNode.appendNode('artifactId', dep.name)
+                    dependencyNode.appendNode('version', dep.version)
+
+                    if (!dep.transitive) {
+                        def exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                        exclusionNode.appendNode('groupId', '*')
+                        exclusionNode.appendNode('artifactId', '*')
+                    } else if (!dep.properties.excludeRules.empty) {
+                        def exclusionsNode = dependencyNode.appendNode('exclusions')
+                        dep.properties.excludeRules.each { ExcludeRule rule ->
+                            def exclusionNode = exclusionsNode.appendNode('exclusion')
+                            exclusionNode.appendNode('groupId', rule.group ?: '*')
+                            exclusionNode.appendNode('artifactId', rule.module ?: '*')
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            if (project.hasProperty("remote")
+                    && project.getProperty("remote") == "true") {
+                // Currently, maven-publish plugin only supports sftp
+                // https://discuss.gradle.org/t/support-ssh-protocol-for-maven-publish-just-like-maven/17892
+                url = deployUrl
+                credentials {
+                    username deployRepoUsername
+                    password deployRepoPassword
+                }
+            } else {
+                url "$rootDir/repo"
+            }
+        }
+    }
 }

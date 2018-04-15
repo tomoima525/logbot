@@ -27,6 +27,9 @@ object Logbot {
         }
         private set
 
+    /**
+     * Setup manager. This method should be called in the beginning to use Logbot
+     */
     @JvmStatic
     fun setup(context: Context, logbotSettings: LogbotSettings = LogbotSettings()) {
         localBroadcastManager = LocalBroadcastManager.getInstance(context)
@@ -34,6 +37,11 @@ object Logbot {
         Logbot.logbotSettings = logbotSettings
     }
 
+    /**
+     * Send message to Logbot and show on Viewer.
+     * @param message it can be either just string or a format string
+     * @params args arguments if a format string is used (optional)
+     */
     @JvmStatic
     fun send(message: String, vararg args: Any?) {
         assert(localBroadcastManager)

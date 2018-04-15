@@ -3,6 +3,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'checkstyle'
 apply plugin: 'maven-publish'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'org.jetbrains.dokka'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${versions.dokka}"
+    }
+}
 
 android {
     compileSdkVersion 27
@@ -63,21 +73,15 @@ task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
-// javadoc jar (optional)
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    failOnError false
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
     classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-//TODO:fix javadoc error
-tasks.withType(Javadoc) {
-    enabled = false
+    from "$buildDir/javadoc"
 }
 
 publish {
