@@ -1,7 +1,17 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from: 'dependencies.gradle'
 buildscript {
+    def props = new Properties()
+    file('private.properties').withInputStream {
+        props.load(it)
+    }
+    ext.bintrayUserProperty = props.get('BINTRAY_USER')
+    ext.bintrayApiKeyProperty = props.get('BINTRAY_KEY')
     ext.kotlin_version = '1.2.31'
+    ext.library_version = '0.9.0'
+    ext.user = 'tomoima525'
+    ext.group = 'com.tomoima.logbot'
+    ext.siteUrl = 'https://github.com/tomoima525/logbot'
     repositories {
         google()
         jcenter()
@@ -9,7 +19,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath "com.novoda:bintray-release:0.8.1"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

@@ -1,9 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 27
-
-
 
     defaultConfig {
         minSdkVersion 21
@@ -25,6 +24,23 @@ android {
     lintOptions {
             abortOnError false
     }
+}
+
+publish {
+    userOrg = user
+    groupId  = group
+    artifactId = 'logbot-no-op'
+    bintrayUser = bintrayUserProperty
+    bintrayKey = bintrayApiKeyProperty
+    publishVersion = library_version
+    desc = 'View logs on top of your application'
+    website = siteUrl
+    licences = ['Apache-2.0']
+}
+
+//TODO:fix javadoc error
+tasks.withType(Javadoc) {
+    enabled = false
 }
 
 dependencies {
