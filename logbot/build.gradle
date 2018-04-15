@@ -2,11 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'checkstyle'
 apply plugin: 'maven-publish'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 27
-
-
 
     defaultConfig {
         minSdkVersion 21
@@ -76,8 +75,22 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
+//TODO:fix javadoc error
+tasks.withType(Javadoc) {
+    enabled = false
+}
 
-def library_version = '0.9.0'
+publish {
+    userOrg = user
+    groupId  = group
+    artifactId = 'logbot'
+    bintrayUser = bintrayUserProperty
+    bintrayKey = bintrayApiKeyProperty
+    publishVersion = library_version
+    desc = 'View logs on top of your application'
+    website = siteUrl
+    licences = ['Apache-2.0']
+}
 
 // Publish Artifacts with Maven plugin
 publishing {
