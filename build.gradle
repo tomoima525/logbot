@@ -2,8 +2,10 @@
 apply from: 'dependencies.gradle'
 buildscript {
     def props = new Properties()
-    file('private.properties').withInputStream {
-        props.load(it)
+    if(file('private.properties').exists()) {
+        file('private.properties').withInputStream {
+            props.load(it)
+        }
     }
     ext.bintrayUserProperty = props.get('BINTRAY_USER')
     ext.bintrayApiKeyProperty = props.get('BINTRAY_KEY')
