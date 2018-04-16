@@ -3,7 +3,7 @@
 
 View logs on top of your application
 
-<img src="./art/logbot_demo.gif" size="300"/>
+<img src="./art/logbot_demo.gif" width="300"/>
 
 ## What's this for?
 
