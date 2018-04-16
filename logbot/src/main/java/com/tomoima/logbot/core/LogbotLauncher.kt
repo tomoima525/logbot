@@ -15,6 +15,9 @@ class LogbotLauncher : AppCompatActivity() {
 
     companion object {
         const val REQUEST_OVERLAY = 525
+        /**
+         * Start Overlaying View upon application
+         */
         @JvmStatic
         fun startOverlay(activity: Activity) {
             val intent = Intent(activity, LogbotLauncher::class.java)
