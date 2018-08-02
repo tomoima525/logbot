@@ -1,6 +1,7 @@
 ext.versions = [
         dokka : '0.9.16',
 
+        recyclerView: '27.1.1',
         supportLibrary : '27.1.1',
         androidKtx : '0.3',
         junit : '4.12',
