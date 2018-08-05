@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="240dp"
     android:layout_height="240dp"
-    android:layout_marginBottom="@dimen/margin_16dp"
-    android:layout_marginEnd="@dimen/margin_16dp"
-    android:layout_marginStart="@dimen/margin_16dp"
-    android:layout_marginTop="@dimen/margin_24dp"
+    android:layout_marginBottom="@dimen/margin_default"
+    android:layout_marginEnd="@dimen/margin_default"
+    android:layout_marginStart="@dimen/margin_default"
+    android:layout_marginTop="@dimen/margin_medium"
     android:background="@drawable/bg_round_rectangle">
 
     <ImageView
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:padding="@dimen/margin_8dp"
+        android:padding="@dimen/margin_small"
         android:contentDescription="@string/close"
         android:src="@drawable/ic_close_white_24dp"
     />
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/close"
-        android:padding="@dimen/margin_8dp"
+        android:padding="@dimen/margin_small"
         android:contentDescription="@string/clear"
         android:src="@drawable/ic_delete_sweep_white_24dp"
     />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/clear_log"
-        android:padding="@dimen/margin_8dp"
+        android:padding="@dimen/margin_small"
         android:contentDescription="@string/share"
         android:src="@drawable/ic_share_white_24dp"
     />
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/share_log"
-        android:padding="@dimen/margin_8dp"
+        android:padding="@dimen/margin_small"
         android:contentDescription="@string/shrink"
         android:src="@drawable/ic_remove_white_24dp"
     />
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/share_log"
-        android:padding="@dimen/margin_8dp"
+        android:padding="@dimen/margin_small"
         android:contentDescription="@string/expand"
         android:src="@drawable/ic_add_white_24dp"
         android:visibility="gone"
@@ -69,9 +69,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/close"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:layout_marginBottom="@dimen/margin_16dp"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_default"
         android:orientation="vertical"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
     />

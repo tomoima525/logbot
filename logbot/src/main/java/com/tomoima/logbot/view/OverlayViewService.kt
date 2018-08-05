@@ -161,7 +161,7 @@ class OverlayViewService : Service() {
     }
 
     private fun shrink() {
-        val newHeight = resources.getDimensionPixelSize(R.dimen.margin_36dp)
+        val newHeight = resources.getDimensionPixelSize(R.dimen.margin_large)
         val slideAnimator = ValueAnimator
             .ofInt(overlayView.height, newHeight)
             .setDuration(300)

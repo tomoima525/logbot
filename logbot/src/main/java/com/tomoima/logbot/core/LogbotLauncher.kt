@@ -55,7 +55,8 @@ class LogbotLauncher : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == REQUEST_OVERLAY
-                && resultCode == Activity.RESULT_OK
+            // Setting screen does not have Ok button, thus result code is always RESULT_CANCELED
+                && resultCode == Activity.RESULT_CANCELED
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && Settings.canDrawOverlays(this)) {
             launchOverLay()
